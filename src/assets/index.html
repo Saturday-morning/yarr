@@ -179,7 +179,7 @@
             <div class="px-2 toolbar d-flex align-items-center">
                 <button class="toolbar-item mr-2 d-block d-md-none"
                         @click="feedSelected = null"
-                        title="Show Feeds">
+                        title="显示feeds">
                     <span class="icon">{% inline "chevron-left.svg" %}</span>
                 </button>
                 <div class="input-icon flex-grow-1">
@@ -190,7 +190,7 @@
                 <button class="toolbar-item ml-2"
                         @click="markItemsRead()"
                         v-if="filterSelected == 'unread'"
-                        title="Mark All Read">
+                        title="全部已读">
                     <span class="icon">{% inline "check.svg" %}</span>
                 </button>
 
@@ -201,7 +201,7 @@
                 <dropdown class="settings-dropdown"
                           toggle-class="btn btn-link toolbar-item px-2 ml-2"
                           drop="right"
-                          title="Feed Settings"
+                          title="订阅源设置"
                           v-if="current.type == 'feed'">
                     <template v-slot:button>
                         <span class="icon">{% inline "more-horizontal.svg" %}</span>
@@ -209,16 +209,16 @@
                     <header class="dropdown-header">{{ current.feed.title }}</header>
                     <a class="dropdown-item" :href="current.feed.link" target="_blank" v-if="current.feed.link">
                         <span class="icon mr-1">{% inline "globe.svg" %}</span>
-                        Website
+                        打开网址
                     </a>
                     <a class="dropdown-item" :href="current.feed.feed_link" target="_blank" v-if="current.feed.feed_link">
                         <span class="icon mr-1">{% inline "rss.svg" %}</span>
-                        Feed Link
+                        打开rss链接
                     </a>
                     <div class="dropdown-divider" v-if="current.feed.link || current.feed.feed_link"></div>
                     <button class="dropdown-item" @click="renameFeed(current.feed)">
                         <span class="icon mr-1">{% inline "edit.svg" %}</span>
-                        Rename
+                        重新命名
                     </button>
                     <div class="dropdown-divider"></div>
                     <header class="dropdown-header">Move to...</header>
@@ -231,16 +231,16 @@
                     </button>
                     <button class="dropdown-item text-muted" @click="moveFeed(current.feed, null)" v-if="current.feed.folder_id">
                         <span class="icon mr-1">{% inline "folder-minus.svg" %}</span>
-                        ──
+                        根文件夹
                     </button>
                     <button class="dropdown-item text-muted" @click="moveFeedToNewFolder(current.feed)">
                         <span class="icon mr-1">{% inline "folder-plus.svg" %}</span>
-                        new folder
+                        新 文件夹
                     </button>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item text-danger" @click.prevent="deleteFeed(current.feed)">
                         <span class="icon mr-1">{% inline "trash.svg" %}</span>
-                        Delete
+                        删除订阅！
                     </button>
                 </dropdown>
                 <dropdown class="settings-dropdown"
@@ -254,12 +254,12 @@
                     <header class="dropdown-header">{{ current.folder.title }}</header>
                     <button class="dropdown-item" @click="renameFolder(current.folder)">
                         <span class="icon mr-1">{% inline "edit.svg" %}</span>
-                        Rename
+                        重命名
                     </button>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item text-danger" @click="deleteFolder(current.folder)">
                         <span class="icon mr-1">{% inline "trash.svg" %}</span>
-                        Delete
+                        删除！
                     </button>
                 </dropdown>
             </div>
