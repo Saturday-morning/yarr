@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <title>yarr!</title>
@@ -25,19 +25,19 @@
                 <div class="flex-grow-1"></div>
                 <button class="toolbar-item"
                         :class="{active: filterSelected == 'unread'}"
-                        title="Unread"
+                        title="没读"
                         @click="filterSelected = 'unread'">
                     <span class="icon">{% inline "circle-full.svg" %}</span>
                 </button>
                 <button class="toolbar-item"
                         :class="{active: filterSelected == 'starred'}"
-                        title="Starred"
+                        title="收藏"
                         @click="filterSelected = 'starred'">
                     <span class="icon">{% inline "star-full.svg" %}</span>
                 </button>
                 <button class="toolbar-item"
                         :class="{active: filterSelected == ''}"
-                        title="All"
+                        title="全部文章"
                         @click="filterSelected = ''">
                     <span class="icon">{% inline "assorted.svg" %}</span>
                 </button>
@@ -49,17 +49,17 @@
 
                     <button class="dropdown-item" @click="showSettings('create')">
                         <span class="icon mr-1">{% inline "plus.svg" %}</span>
-                        New Feed
+                        添加新feed
                     </button>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item" @click="fetchAllFeeds()">
                         <span class="icon mr-1">{% inline "rotate-cw.svg" %}</span>
-                        Refresh Feeds
+                        刷新！
                     </button>
 
                     <div class="dropdown-divider"></div>
 
-                    <header class="dropdown-header">Theme</header>
+                    <header class="dropdown-header">主题</header>
                     <div class="row text-center m-0">
                         <button class="btn btn-link col-4 px-0 rounded-0"
                                 :class="'theme-'+t"
@@ -71,25 +71,25 @@
 
                     <div class="dropdown-divider"></div>
 
-                    <header class="dropdown-header">Auto Refresh</header>
+                    <header class="dropdown-header">自动刷新（没有合适时间就自己改）</header>
                     <div class="row text-center m-0">
-                        <button class="dropdown-item col-4 px-0" :class="{active: !refreshRate}" @click.stop="refreshRate = 0">0</button>
-                        <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 10}" @click.stop="refreshRate = 10">10m</button>
-                        <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 30}" @click.stop="refreshRate = 30">30m</button>
+                        <button class="dropdown-item col-4 px-0" :class="{active: !refreshRate}" @click.stop="refreshRate = 0">stop</button>
+                        <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 30}" @click.stop="refreshRate = 30">30min</button>
                         <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 60}" @click.stop="refreshRate = 60">1h</button>
                         <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 120}" @click.stop="refreshRate = 120">2h</button>
                         <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 240}" @click.stop="refreshRate = 240">4h</button>
+                        <button class="dropdown-item col-4 px-0" :class="{active: refreshRate == 480}" @click.stop="refreshRate = 480">8h</button>
                     </div>
 
                     <div class="dropdown-divider"></div>
 
-                    <header class="dropdown-header">Show first</header>
+                    <header class="dropdown-header">按时间排序</header>
                     <div class="d-flex text-center">
-                        <button class="dropdown-item px-0" :class="{active: itemSortNewestFirst}" @click.stop="itemSortNewestFirst=true">New</button>
-                        <button class="dropdown-item px-0" :class="{active: !itemSortNewestFirst}" @click.stop="itemSortNewestFirst=false">Old</button>
+                        <button class="dropdown-item px-0" :class="{active: itemSortNewestFirst}" @click.stop="itemSortNewestFirst=true">从新到旧</button>
+                        <button class="dropdown-item px-0" :class="{active: !itemSortNewestFirst}" @click.stop="itemSortNewestFirst=false">从老到新</button>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <header class="dropdown-header">Subscriptions</header>
+                    <header class="dropdown-header">导入和导出</header>
                     <form id="opml-import-form" enctype="multipart/form-data" tabindex="-1">
                         <input type="file"
                                id="opml-import"
@@ -98,17 +98,17 @@
                                style="opacity: 0; width: 1px; height: 0; position: absolute; z-index: -1;">
                         <label class="dropdown-item mb-0 cursor-pointer" for="opml-import" @click.stop="">
                             <span class="icon mr-1">{% inline "download.svg" %}</span>
-                            Import
+                            导入
                         </label>
                     </form>
                     <a class="dropdown-item" href="./opml/export">
                         <span class="icon mr-1">{% inline "upload.svg" %}</span>
-                        Export
+                        导出
                     </a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item" @click="showSettings('shortcuts')">
                         <span class="icon mr-1">{% inline "help-circle.svg" %}</span>
-                        Shortcuts
+                        快捷键
                     </button>
                     <div class="dropdown-divider" v-if="authenticated"></div>
                     <button class="dropdown-item" v-if="authenticated" @click="logout()">
@@ -122,9 +122,9 @@
                     <input type="radio" name="feed" value="" v-model="feedSelected">
                     <div class="selectgroup-label d-flex align-items-center w-100">
                         <span class="icon mr-2">{% inline "layers.svg" %}</span>
-                        <span class="flex-fill text-left text-truncate" v-if="filterSelected=='unread'">All Unread</span>
-                        <span class="flex-fill text-left text-truncate" v-if="filterSelected=='starred'">All Starred</span>
-                        <span class="flex-fill text-left text-truncate" v-if="filterSelected==''">All Feeds</span>
+                        <span class="flex-fill text-left text-truncate" v-if="filterSelected=='unread'">还没看</span>
+                        <span class="flex-fill text-left text-truncate" v-if="filterSelected=='starred'">收藏</span>
+                        <span class="flex-fill text-left text-truncate" v-if="filterSelected==''">全部</span>
                         <span class="counter text-right">{{ filteredTotalStats }}</span>
                     </div>
                 </label>
@@ -355,7 +355,7 @@
                 <span class="icon">{% inline "x.svg" %}</span>
             </button>
             <div v-if="settings=='create'">
-                <p class="cursor-default"><b>New Feed</b></p>
+                <p class="cursor-default"><b>添加订阅源</b></p>
                 <form action="" @submit.prevent="createFeed(event)" class="mt-4">
                     <label for="feed-url">URL</label>
                     <input id="feed-url" name="url" type="url" class="form-control" required autocomplete="off" :readonly="feedNewChoice.length > 0" placeholder="https://example.com/feed" v-focus>
@@ -388,20 +388,20 @@
 
                 <table class="table table-borderless table-sm table-compact m-0">
                     <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td>
-                                                            <td>show unread / starred / all feeds</td></tr>
-                    <tr><td><kbd>/</kbd></td>               <td>focus the search bar</td></tr>
+                                                            <td>切换 未读/ 收藏 /所有文章</td></tr>
+                    <tr><td><kbd>/</kbd></td>               <td>一键搜索</td></tr>
 
                     <tr><td colspan=2>&nbsp;</td></tr>
-                    <tr><td><kbd>j</kbd> <kbd>k</kbd></td>  <td>next / prev article</td></tr>
-                    <tr><td><kbd>l</kbd> <kbd>h</kbd></td>  <td>next / prev feed</td></tr>
+                    <tr><td><kbd>j</kbd> <kbd>k</kbd></td>  <td>next / prev 文章</td></tr>
+                    <tr><td><kbd>l</kbd> <kbd>h</kbd></td>  <td>下（上）一个feed</td></tr>
 
                     <tr><td colspan=2>&nbsp;</td></tr>
-                    <tr><td><kbd>R</kbd></td>               <td>mark all read</td></tr>
-                    <tr><td><kbd>r</kbd></td>               <td>mark read / unread</td></tr>
-                    <tr><td><kbd>s</kbd></td>               <td>mark starred / unstarred</td></tr>
-                    <tr><td><kbd>o</kbd></td>               <td>open link</td></tr>
-                    <tr><td><kbd>i</kbd></td>               <td>read here</td> </tr>
-                    <tr><td><kbd>f</kbd> <kbd>b</kbd></td>  <td>scroll content forward / backward</td>
+                    <tr><td><kbd>R</kbd></td>               <td>全部标记已读</td></tr>
+                    <tr><td><kbd>r</kbd></td>               <td>标记已读 / unread</td></tr>
+                    <tr><td><kbd>s</kbd></td>               <td>星星（收藏 / unstarred</td></tr>
+                    <tr><td><kbd>o</kbd></td>               <td>打开rss的源头链接</td></tr>
+                    <tr><td><kbd>i</kbd></td>               <td>全文</td> </tr>
+                    <tr><td><kbd>f</kbd> <kbd>b</kbd></td>  <td>上下滚动</td>
                     </tr>
                 </table>
             </div>
